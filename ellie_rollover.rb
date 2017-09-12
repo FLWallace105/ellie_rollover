@@ -18,6 +18,8 @@ module EllieRollOver
             @target_product_id = ENV['TARGET_PRODUCT_ID']
             @staging_three_pack_id = ENV['STAGING_ELLIE_3PACK_ID']
             @target_three_pack_id = ENV['TARGET_ELLIE_3PACK_ID']
+            @staging_3months_id = ENV['STAGING_3MONTHS_ID']
+            @target_3months_id = ENV['TARGET_3MONTHS_ID']
 
         end
 
@@ -55,11 +57,25 @@ module EllieRollOver
             target_product.save
             target_three_pack.images = staging_three_pack_images
             target_three_pack.save
-            puts "Successfully copied Product Info from Staging to Target for Monthly Box and Ellie 3- Pack."
+            puts "Sleeping four seconds"
+            sleep 4
+            puts "Doing Product Three Months"
+            puts "_____________________________"
+            staging_three_months = ShopifyAPI::Product.find(@staging_3months_id)
+            target_three_months = ShopifyAPI::Product.find(@target_3months_id)
+            staging_three_months_desc = staging_three_months.body_html
+            staging_three_months_images = staging_three_months.images
+            target_three_months.body_html = staging_three_months_desc
+            target_three_months.images = staging_three_months_images
+            puts staging_three_months_desc.inspect
+            puts staging_three_months_images.inspect
+            target_three_months.save
+            puts "***********************************"
+            puts "Successfully copied Product Info from Staging to Target for Monthly Box and Ellie 3- Pack and 3 Months product."
             puts "All done!"
 
 
-
+            
 
         end
 
