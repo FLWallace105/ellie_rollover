@@ -1,0 +1,22 @@
+version: 1.0
+os: linux
+files:
+   - source: /
+     destination: /home/floyd/ellie_rollover
+permissions:
+   - object: /var/www/html
+     pattern: "/home/floyd/ellie_rollover"
+     owner: floyd
+     group: floyd
+     mode: 755
+     type:
+       - file
+hooks:
+   BeforeInstall:
+    - location: scripts/installapache.sh
+      runas: root
+    - location: scripts/startapache.sh
+      runas: root
+   AfterInstall:
+    - location: scripts/restartapache.sh
+      runas: root
