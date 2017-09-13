@@ -1,13 +1,6 @@
-version: 1.0
+version: 0.0
 os: linux
 files:
    - source: /
      destination: /home/floyd/ellie_rollover
-permissions:
-   - object: /var/www/html
-     pattern: "/home/floyd/ellie_rollover"
-     owner: floyd
-     group: floyd
-     mode: 755
-     type:
-       - file
+
