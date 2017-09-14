@@ -3,4 +3,8 @@ os: linux
 files:
    - source: /
      destination: /home/floyd/ellie_rollover
-
+hooks:
+  ApplicationStop:
+    - location: scripts/stop_server
+      timeout: 300
+      runas: root
