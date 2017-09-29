@@ -20,6 +20,7 @@ module EllieRollOver
             @target_three_pack_id = ENV['TARGET_ELLIE_3PACK_ID']
             @staging_3months_id = ENV['STAGING_3MONTHS_ID']
             @target_3months_id = ENV['TARGET_3MONTHS_ID']
+            @new_month_collection_id = ENV['NEW_MONTH_COLLECTION']
 
         end
 
@@ -28,6 +29,15 @@ module EllieRollOver
             puts "Theme ID = #{@theme_id}"
             shop_url = "https://#{@shopkey}:#{@shoppass}@#{@shopname}.myshopify.com/admin"
             ShopifyAPI::Base.site = shop_url
+            # publish collection
+            new_collection = ShopifyAPI::CustomCollection.find(@new_month_collection_id)
+            new_collection.published = true
+            puts new_collection.inspect
+            new_collection.save!
+            puts "New Collection published"
+            puts "-----------------------"
+
+
             my_theme = ShopifyAPI::Theme.find(@theme_id)
             #puts my_theme.inspect
             theme_name = my_theme.name
